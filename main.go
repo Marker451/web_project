@@ -71,7 +71,7 @@ func PostInfoHandler(response http.ResponseWriter, request *http.Request) {
 		}
 		log.Printf("%+v", form)
 	}
-	ret, _ := ioutil.ReadFile("/Users/dongwei/Downloads/mycode/web_project/views/docs/success.html")
+	ret, _ := ioutil.ReadFile("./views/docs/success.html")
 	response.Write(ret)
 }
 func httpGet(addr string) (result []byte) {
@@ -100,8 +100,9 @@ func crontabMail() {
 */
 func main() {
 	RequestMap = make(map[string]*requestForm)
-	http.Handle("/", http.FileServer(http.Dir("/Users/dongwei/Downloads/mycode/web_project/views/docs/")))
+	http.Handle("/", http.FileServer(http.Dir("./views/docs/")))
 	http.HandleFunc("/postInfo", PostInfoHandler)
 	http.HandleFunc("/33257", GetInfoHandler)
-	http.ListenAndServe(":6799", nil)
+	http.ListenAndServe(":8431", nil)
+
 }
