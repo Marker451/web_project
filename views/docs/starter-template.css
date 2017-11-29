@@ -1,0 +1,14 @@
+body {
+  padding-top: 100px;
+  background-color: #000;
+}
+h1 {
+	color:#FFF;
+}
+.lead {
+	color:#FFF;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
